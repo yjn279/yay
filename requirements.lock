@@ -8,6 +8,8 @@
 #   with-sources: false
 
 -e file:.
+annotated-types==0.6.0
+    # via pydantic
 anyio==4.3.0
     # via httpx
 certifi==2024.2.2
@@ -17,6 +19,10 @@ cffi==1.16.0
     # via cryptography
 cryptography==41.0.1
     # via yaylib
+deprecation==2.1.0
+    # via postgrest
+gotrue==2.4.2
+    # via supabase
 h11==0.14.0
     # via httpcore
 h2==4.1.0
@@ -26,7 +32,12 @@ hpack==4.0.0
 httpcore==1.0.5
     # via httpx
 httpx==0.25.2
+    # via gotrue
     # via httpx
+    # via postgrest
+    # via storage3
+    # via supabase
+    # via supafunc
     # via yaylib
 hyperframe==6.0.1
     # via h2
@@ -36,20 +47,33 @@ idna==3.6
 numpy==1.26.4
     # via pandas
     # via yay
+packaging==24.0
+    # via deprecation
 pandas==2.2.1
     # via yay
 pillow==9.3.0
     # via yaylib
+postgrest==0.16.2
+    # via supabase
 pycparser==2.22
     # via cffi
+pydantic==2.6.4
+    # via gotrue
+    # via postgrest
+pydantic-core==2.16.3
+    # via pydantic
 pyjwt==2.8.0
     # via yaylib
 python-dateutil==2.9.0.post0
     # via pandas
+    # via realtime
+    # via storage3
 python-dotenv==1.0.1
     # via yay
 pytz==2024.1
     # via pandas
+realtime==1.0.3
+    # via supabase
 six==1.16.0
     # via python-dateutil
 sniffio==1.3.1
@@ -57,9 +81,24 @@ sniffio==1.3.1
     # via httpx
 socksio==1.0.0
     # via httpx
+storage3==0.7.4
+    # via supabase
+strenum==0.4.15
+    # via postgrest
+supabase==2.4.1
+    # via yay
+supafunc==0.4.5
+    # via supabase
+typing-extensions==4.11.0
+    # via pydantic
+    # via pydantic-core
+    # via realtime
+    # via storage3
 tzdata==2024.1
     # via pandas
 websocket-client==1.6.0
     # via yaylib
+websockets==12.0
+    # via realtime
 yaylib==1.4.14
     # via yay

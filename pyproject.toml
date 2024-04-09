@@ -10,6 +10,7 @@ dependencies = [
     "python-dotenv>=1.0.1",
     "pandas>=2.2.1",
     "numpy>=1.26.4",
+    "supabase>=2.4.1",
 ]
 readme = "README.md"
 requires-python = ">= 3.8"
