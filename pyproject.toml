@@ -1,0 +1,26 @@
+[project]
+name = "yay"
+version = "0.1.0"
+description = "Add your description here"
+authors = [
+    { name = "winnie279", email = "57951904+yjn279@users.noreply.github.com" }
+]
+dependencies = [
+    "yaylib>=1.4.14",
+]
+readme = "README.md"
+requires-python = ">= 3.8"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.rye]
+managed = true
+dev-dependencies = []
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/yay"]
