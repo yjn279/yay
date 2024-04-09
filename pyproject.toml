@@ -8,6 +8,8 @@ authors = [
 dependencies = [
     "yaylib>=1.4.14",
     "python-dotenv>=1.0.1",
+    "pandas>=2.2.1",
+    "numpy>=1.26.4",
 ]
 readme = "README.md"
 requires-python = ">= 3.8"
