@@ -1,3 +1,4 @@
+import csv
 import datetime as dt
 import os
 from pprint import pprint
@@ -11,8 +12,8 @@ import yaylib
 def main():
     # 環境変数の読み込み
     load_dotenv()
-    email = os.getenv("EMAIL")
-    password = os.getenv("PASSWORD")
+    email = os.getenv("YAY_EMAIL")
+    password = os.getenv("YAY_PASSWORD")
 
     # ログイン
     client = yaylib.Client()
@@ -34,14 +35,14 @@ def main():
     # ユーザー情報をDataFrameに格納
     new_df = pd.DataFrame(users)
     new_df = new_df.set_index("id")
-    new_df["biography"] = new_df["biography"].str.replace("\n", " ")
+    new_df["biography"] = new_df["biography"].str.replace("\n", " ").replace('"', "")
     new_df["score"] = new_df.apply(score, axis="columns")
     new_df = new_df[["nickname", "biography", "profile_icon", "score"]]
 
     # CSVにデータを追加
     df = pd.concat([df, new_df], axis=0)
     df = df.drop_duplicates(keep="last")
-    df.to_csv("data/users.csv")
+    df.to_csv("data/users.csv", quoting=csv.QUOTE_ALL)
 
 
 def score(user):
