@@ -26,6 +26,7 @@ hpack==4.0.0
 httpcore==1.0.5
     # via httpx
 httpx==0.25.2
+    # via httpx
     # via yaylib
 hyperframe==6.0.1
     # via h2
