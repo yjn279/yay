@@ -12,7 +12,6 @@ def main():
     email: str = os.getenv("YAY_EMAIL")
     password: str = os.getenv("YAY_PASSWORD")
 
-    print(url)
     # Supabaseクライアントの作成
     supabase: Client = create_client(url, key)
 
