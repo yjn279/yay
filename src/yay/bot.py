@@ -1,5 +1,6 @@
 import os
 
+import anthropic
 from dotenv import load_dotenv
 import yaylib
 from yaylib import Message
@@ -11,7 +12,7 @@ key: str = os.getenv("SUPABASE_KEY")
 email: str = os.getenv("YAY_EMAIL")
 password: str = os.getenv("YAY_PASSWORD")
 
-
+# 確認ダイアログ
 def confirm(text, default=None):
     if default is None or default == True:
         text += " ([y]/n)? "
@@ -26,7 +27,14 @@ def confirm(text, default=None):
         return True, ""
     else:
         return False, text
+    
+# プロンプト
+messages = []
+with open("src/prompts/system.md") as f:
+    system = f.read()
 
+# Anthropic API
+client = anthropic.Anthropic()
 
 class MyBot(yaylib.Client):
     def on_ready(self):
@@ -44,24 +52,47 @@ class MyBot(yaylib.Client):
 
     def on_message(self, message: Message):
         # 相手のメッセージを出力
-        print(f"> {message.text}")
+        print(f"\n> {message.text}")
+        messages.append({
+            "role": "user",
+            "content": [{ "type": "text", "text": message.text }]
+        })
 
         # AIのメッセージ
-        text = "やっほー\nぼっとだよ"
+        response = client.messages.create(
+            model="claude-3-opus-20240229",
+            max_tokens=1000,
+            temperature=0.2,
+            system=system,
+            messages=messages,
+        )
+        texts = response.content[0].text
 
         # AIのメッセージを送信
-        if confirm(text):
-            for text in text.split("\n"):
+        if confirm(texts):
+            for text in texts.replace("- ", "").split("\n"):
                 self.send_message(message.room_id, text=text)
+            messages.append({
+                "role": "assistant",
+                "content": [{ "type": "text", "text": texts }]
+            })
             return
 
         # 自分でメッセージを送信
+        texts = ""
         while True:
             exit, text = confirm("Exit:", default="your response")
             if exit:
-                return
+                texts += "- "
+                break
             else:
                 self.send_message(message.room_id, text=text)
+                texts += "- " + text + "\n"
+
+        messages.append({
+            "role": "assistant",
+            "content": [{ "type": "text", "text": texts }]
+        })
             
 
     def on_chat_room_delete(self, room_id):
